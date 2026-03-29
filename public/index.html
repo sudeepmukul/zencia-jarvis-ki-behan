@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  background: black;
+  color: #fbff00;
+  font-family: monospace;
+  text-align: center;
+  white-space: pre;
+}
+</style>
+</head>
+<body>
+
+<div id="screen"></div>
+
+<script>
+function loadData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/data", true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var d = JSON.parse(xhr.responseText);
+
+            var output =
+"====================\n" +
+"      ZENCIA        \n" +
+"====================\n\n" +
+
+d.face + "\n\n" +
+
+"Time: " + new Date().toLocaleTimeString() + "\n" +
+"CPU: " + d.cpu + "%\n\n" +
+
+"Zencia Says:\n" +
+d.ai + "\n";
+
+            document.getElementById("screen").innerText = output;
+        }
+    };
+
+    xhr.send();
+}
+
+setInterval(loadData, 2000);
+loadData();
+</script>
+
+</body>
+</html>
